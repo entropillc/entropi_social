@@ -1,0 +1,54 @@
+<div class="modal active">
+  <%= form_for(@user, :url => user_registration_path) do |f| %>
+    <div class="modal-header">
+      <h3><%= @user.new_record? ? "Registration" : "Edit Account" %></h3>
+    </div>
+    <div class="modal-body">
+      <div class="clearfix <%= field_error(@user, :username) %>">
+        <%= f.label :username %>
+        <div class="input">
+          <%= f.text_field :username, :class => "xlarge", :autofocus => true %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :email) %>">
+        <%= f.label :email %>
+        <div class="input">
+          <%= f.text_field :email, :class => "xlarge" %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :first_name) %>">
+        <%= f.label :first_name %>
+        <div class="input">
+          <%= f.text_field :first_name, :class => "xlarge" %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :last_name) %>">
+        <%= f.label :last_name %>
+        <div class="input">
+          <%= f.text_field :last_name, :class => "xlarge" %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :birth_date) %>">
+        <%= f.label :birth_date %>
+        <div class="input">
+          <%= f.date_select :birth_date, {:order => [:month, :day, :year], :start_year => 1940 }, {:class => "span2"} %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :password) %>">
+        <%= f.label :password %>
+        <div class="input">
+          <%= f.password_field :password, :class => "xlarge" %>
+        </div>
+      </div>
+      <div class="clearfix <%= field_error(@user, :password_confirmation) %>">
+        <%= f.label :password_confirmation %>
+        <div class="input">
+          <%= f.password_field :password_confirmation, :class => "xlarge" %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit @user.new_record? ? "Register User" : "Update Account", :class => "btn primary" %>
+    </div>
+  <% end %>
+</div>
