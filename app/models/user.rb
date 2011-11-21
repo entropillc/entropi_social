@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
   has_many :groups, :as => :groupable
   
   #TODO: These need abstracted out in to application specific code outside the Entropi Social gem.
-  has_many :entries
-  has_many :comments
-  has_many :photos
+  #has_many :entries
+  #has_many :comments
+  #has_many :photos
   
-  accepts_nested_attributes_for :profile
+  #accepts_nested_attributes_for :profile
 
   def full_name
     first_name + " "  + last_name
