@@ -3,11 +3,11 @@ class Friendship < ActiveRecord::Base
   
   validates_inclusion_of :status, :in => [:accepted, :declined, :pending]
   
-  scope by_user, lambda { |user_id| 
+  scope :by_user, lambda { |user_id| 
     where("invitor_id = ? OR invited_id = ?", user_id, user_id)  
   }
   
-  scope by_status, lambda {|status|
+  scope :by_status, lambda {|status|
     where("status = ?", status.to_s)
   }
 
