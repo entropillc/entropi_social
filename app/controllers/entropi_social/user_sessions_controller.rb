@@ -12,8 +12,8 @@ module EntropiSocial
       if user_signed_in?
         respond_to do |format|
           format.html {
-            flash[:notice] = I18n.t("logged_in_succesfully")
-            redirect_to('/')
+            flash[:notice] = I18n.t("devise.sessions.signed_in")
+            redirect_to(root_path)
           }
         end
       else

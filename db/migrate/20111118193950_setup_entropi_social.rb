@@ -39,7 +39,7 @@ class SetupEntropiSocial < ActiveRecord::Migration
     create_table :friendships do |t|
       t.integer :inviter_id
       t.integer :invited_id
-      t.integer :status
+      t.column :status
       t.timestamps
     end
     
