@@ -20,6 +20,7 @@ class SetupEntropiSocial < ActiveRecord::Migration
     add_index :users, :invitation_token
     
     create_table :profiles do |t|
+      t.references :user
       t.string  :first_name
       t.string :last_name
       t.date  :birth_date
@@ -100,7 +101,6 @@ class SetupEntropiSocial < ActiveRecord::Migration
     drop_table :groups
     drop_table :friendships
     drop_table :memberships
-    drop_table :invitations
     drop_table :comments
     drop_table :likes
     drop_table :photos

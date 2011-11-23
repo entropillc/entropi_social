@@ -15,6 +15,11 @@ class Profile < ActiveRecord::Base
   
   validates_presence_of :first_name, :last_name, :birth_date
   
+  def full_name
+    first_name + " " + last_name
+  end
+  
+  
   def self.site_search(query, search_options={})
     q = "%#{query}%"
     Profile.active.find(:all, :conditions => ["first_name like ? or last_name like ? or login like ?", q, q, q])

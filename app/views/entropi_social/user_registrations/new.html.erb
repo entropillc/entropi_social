@@ -16,7 +16,7 @@
           <%= f.text_field :email, :class => "xlarge" %>
         </div>
       </div>
-      <% f.fields_for :profile do |profile| %>
+      <%= f.fields_for :profile do |profile| %>
         <div class="clearfix <%= field_error(@user, :first_name) %>">
           <%= profile.label :first_name %>
           <div class="input">
