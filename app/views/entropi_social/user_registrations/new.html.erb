@@ -16,24 +16,26 @@
           <%= f.text_field :email, :class => "xlarge" %>
         </div>
       </div>
-      <div class="clearfix <%= field_error(@user, :first_name) %>">
-        <%= f.label :first_name %>
-        <div class="input">
-          <%= f.text_field :first_name, :class => "xlarge" %>
+      <% f.fields_for :profile do |profile| %>
+        <div class="clearfix <%= field_error(@user, :first_name) %>">
+          <%= profile.label :first_name %>
+          <div class="input">
+            <%= profile.text_field :first_name, :class => "xlarge" %>
+          </div>
         </div>
-      </div>
-      <div class="clearfix <%= field_error(@user, :last_name) %>">
-        <%= f.label :last_name %>
-        <div class="input">
-          <%= f.text_field :last_name, :class => "xlarge" %>
+        <div class="clearfix <%= field_error(@user, :last_name) %>">
+          <%= profile.label :last_name %>
+          <div class="input">
+            <%= profile.text_field :last_name, :class => "xlarge" %>
+          </div>
         </div>
-      </div>
-      <div class="clearfix <%= field_error(@user, :birth_date) %>">
-        <%= f.label :birth_date %>
-        <div class="input">
-          <%= f.date_select :birth_date, {:order => [:month, :day, :year], :start_year => 1940 }, {:class => "span2"} %>
+        <div class="clearfix <%= field_error(@user, :birth_date) %>">
+          <%= profile.label :birth_date %>
+          <div class="input">
+            <%= profile.date_select :birth_date, {:order => [:month, :day, :year], :start_year => 1940 }, {:class => "span2"} %>
+          </div>
         </div>
-      </div>
+      <% end %>
       <div class="clearfix <%= field_error(@user, :password) %>">
         <%= f.label :password %>
         <div class="input">
