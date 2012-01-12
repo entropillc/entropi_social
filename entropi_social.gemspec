@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 3.1.1'
   s.add_dependency 'devise', '1.4.9'
   s.add_dependency "devise_invitable", "~> 0.6.0"
+  s.add_dependency "carrierwave"
 
   s.add_development_dependency "sqlite3"
 end

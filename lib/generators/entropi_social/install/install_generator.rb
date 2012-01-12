@@ -7,7 +7,7 @@ module EntropiSocial
       include ::Rails::Generators::Migration
       
       def copy_initializers
-        #copy_file 'alohomora.rb', "config/initializers/entropi_social.rb"
+
       end
       
       def copy_configuration
