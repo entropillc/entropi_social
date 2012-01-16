@@ -3,5 +3,5 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   has_many :comments
   
-  mount_uploader :avatar, AssetUploader
+  mount_uploader :asset, AssetUploader
 end

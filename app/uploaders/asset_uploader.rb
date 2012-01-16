@@ -9,24 +9,24 @@ class AssetUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "#{Rails.env}/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   # Create Thumb Image
   version :thumb do
-    process :scale => [50, 50]
+    process :resize_to_fill => [50, 50]
   end
   
   version :thumbnail do
-     process :scale => [150, 150]
+     process :resize_to_fill => [150, 150]
   end 
   
   version :profile  do
-    process :scale => [200, 200] 
+    process :resize_to_fill => [200, 200] 
   end 
   
   version :large do 
-    process :scale => [500x500]
+    process :resize_to_fill => [500, 500]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
