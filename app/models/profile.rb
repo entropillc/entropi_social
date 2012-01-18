@@ -13,6 +13,8 @@ class Profile < ActiveRecord::Base
   has_many :followers, :through => :follower_friendships, :source => :inviter
   has_many :followings, :through => :following_friendships, :source => :invited
   
+  has_many :albums
+  
   has_one :photo, :as => :photoable
   
   validates_presence_of :first_name, :last_name, :birth_date

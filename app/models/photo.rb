@@ -4,4 +4,14 @@ class Photo < ActiveRecord::Base
   has_many :comments
   
   mount_uploader :asset, AssetUploader
+  
+  def as_json(options={})
+    {
+      :id => self.id, 
+      :thumb => asset.thumb.url,
+      :small => asset.small.url,
+      :medium => asset.medium.url, 
+      :large => asset.large.url
+    }
+  end
 end
