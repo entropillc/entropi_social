@@ -1,12 +1,11 @@
 class Album < ActiveRecord::Base
+  acts_as_authorizable
   
   has_many :photos, :as => :photoable
   
   belongs_to :profile
   
   validates_presence_of :name, :profile_id
-  
-  scope :readable_by, lambda { |profile| where(:profile_id => profile.id)}
   
   def photo_count
     self.photos.size
@@ -21,8 +20,5 @@ class Album < ActiveRecord::Base
     }
   end
   
-  def self.for(profile)
-    Album.readable_by(profile)
-  end
-  
+ 
 end
