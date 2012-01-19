@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   devise_for  :user,
               :controllers => { :sessions => 'entropi_social/user_sessions',
-                                :registrations => 'entropi_social/user_registrations',
-                                :invitations => 'invitations' },
+                                :registrations => 'entropi_social/user_registrations'},
               :skip => [:unlocks],
               :path_names => { :sign_out => 'logout'}
   

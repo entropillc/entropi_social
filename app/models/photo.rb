@@ -3,5 +3,15 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   has_many :comments
   
-  mount_uploader :avatar, AssetUploader
+  mount_uploader :asset, AssetUploader
+  
+  def as_json(options={})
+    {
+      :id => self.id, 
+      :thumb => asset.thumb.url,
+      :small => asset.small.url,
+      :medium => asset.medium.url, 
+      :large => asset.large.url
+    }
+  end
 end
