@@ -12,6 +12,7 @@ module EntropiSocial
         def acts_as_authorizable
           include EntropiSocial::Authorize::Finders
           has_many :accesses, :as => :accessible
+          belongs_to :profile
         end
       end
     end

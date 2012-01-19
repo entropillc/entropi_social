@@ -13,7 +13,7 @@ module EntropiSocial
       module ClassMethods
         # This model determins if it will send back entities owned by a user, or viewable by a user
         def for(requesting_user, for_profile)
-          requesting_user.id.eql?(for_profile.user_id) ? Album.owned_by(for_profile) : Album.viewable_for(for_profile)
+          requesting_user.id.eql?(for_profile.user_id) ? owned_by(for_profile) : viewable_for(for_profile)
         end
         
         # This mehtod gets all records that are owned by this particular profile

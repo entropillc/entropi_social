@@ -3,8 +3,6 @@ class Album < ActiveRecord::Base
   
   has_many :photos, :as => :photoable
   
-  belongs_to :profile
-  
   validates_presence_of :name, :profile_id
   
   def photo_count
