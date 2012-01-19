@@ -1,6 +1,9 @@
 class Friendship < ActiveRecord::Base
-  belongs_to :inviter, :class_name => 'User'
-  belongs_to :invited, :class_name => 'User'
+  belongs_to :inviter, :class_name => 'Profile'
+  belongs_to :invited, :class_name => 'Profile'
+  
+  PENDING  = "pending"
+  ACCEPTED = "accepted"
   
   validates_inclusion_of :status, :in => [:accepted, :declined, :pending]
   
@@ -59,8 +62,6 @@ class Friendship < ActiveRecord::Base
     #
     def make_friends(user, target)
       transaction do
-        user = profile_of(user)
-        target = profile_of(target)
         begin
           find_friendship(user, target, :pending).update_attribute(:status, :accepted)
           Friendship.create!(:inviter_id => target.id, :invited_id => user.id, :status => :accepted)
