@@ -1,11 +1,11 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   
-  has_many :friendships_by_others, :class_name => "Friendship", :foreign_key => 'invited_id', :conditions => "status = #{:accepted}"
-  has_many :friendships_by_me, :class_name => "Friendship", :foreign_key => 'inviter_id', :conditions => "status = #{:accepted}"
+  has_many :friendships_by_others, :class_name => "Friendship", :foreign_key => 'invited_id', :conditions => "status = '#{Friendship::ACCEPTED}'"
+  has_many :friendships_by_me, :class_name => "Friendship", :foreign_key => 'inviter_id', :conditions => "status = '#{Friendship::ACCEPTED}'"
 
-  has_many :follower_friendships, :class_name => "Friendship", :foreign_key => "invited_id", :conditions => "status = #{:accepted}"
-  has_many :following_friendships, :class_name => "Friendship", :foreign_key => "inviter_id", :conditions => "status = #{:accepted}"
+  has_many :follower_friendships, :class_name => "Friendship", :foreign_key => "invited_id", :conditions => "status = '#{Friendship::PENDING}'"
+  has_many :following_friendships, :class_name => "Friendship", :foreign_key => "inviter_id", :conditions => "status = '#{Friendship::PENDING}'"
 
   has_many :friends_by_others,  :through => :friendships_by_others, :source => :inviter
   has_many :friends_by_me, :through => :friendships_by_me, :source => :invited
@@ -25,9 +25,10 @@ class Profile < ActiveRecord::Base
   end
   
   
-  def self.site_search(query, search_options={})
+  def self.search(query, search_options={})
     q = "%#{query}%"
-    Profile.active.find(:all, :conditions => ["first_name like ? or last_name like ? or login like ?", q, q, q])
+    
+    Profile.joins(:user).where("profiles.first_name like ? or profiles.last_name like ? or users.email like ? or users.username = ?", q, q, q, q)
   end
 
   def network
