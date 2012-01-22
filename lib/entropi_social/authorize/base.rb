@@ -11,16 +11,14 @@ module EntropiSocial
         
         def access_groups
           group_ids = Array.new
-          self.accesses.each do
-            group_ids.push(accesses.group_id)
-          end
+          self.accesses.each { |access| group_ids.push(access.group_id) }
           return group_ids
         end
         
         def set_access_groups(group_id_array)
           # remove existing values no included in the group_id_array
-          self.accesses.each { |access| access.destory unless group_id_array.include?(access.id) }
-          group_id_array.each { |group_id| give_access_to_group(group) }
+          self.accesses.each { |access| access.destroy unless group_id_array.include?(access.id) }
+          group_id_array.each { |group_id| give_access_to_group(group_id) }
         end
         
         def give_access_to_group(group_id)
@@ -42,7 +40,7 @@ module EntropiSocial
           has_many :accesses, :as => :accessible
           belongs_to :profile
           
-          before_save :set_access_permissions
+          #before_save :set_access_permissions
           
         end
       end
