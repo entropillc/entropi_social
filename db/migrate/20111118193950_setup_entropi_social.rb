@@ -32,7 +32,7 @@ class SetupEntropiSocial < ActiveRecord::Migration
     create_table :groups do |t|
       t.string :title
       t.integer :avatar_id
-      t.references :user
+      t.references :profile
       t.references :groupable, :polymorphic => true
       t.timestamps
     end
@@ -46,7 +46,7 @@ class SetupEntropiSocial < ActiveRecord::Migration
     
     create_table :memberships do |t|
       t.integer :group_id
-      t.integer :user_id
+      t.integer :profile_id
       t.boolean :admin
       t.timestamps
     end
@@ -62,12 +62,9 @@ class SetupEntropiSocial < ActiveRecord::Migration
     
     create_table :photos do |t|
       t.boolean :is_primary
-      t.string :photo_file_name
-      t.string :photo_content_type
-      t.integer :photo_file_size
-      t.datetime :photo_updated_at
+      t.string :asset
       t.references :photoable, :polymorphic => true
-      t.references :user
+      t.references :profile_id
       t.timestamps
     end
     
@@ -75,15 +72,42 @@ class SetupEntropiSocial < ActiveRecord::Migration
     add_index :photos, :photoable_type
     
     create_table :comments do |t|
-      t.string :title
-      t.text  :body
-      t.integer :user_id
+      t.text :comment
       t.references :commentable, :polymorphic => true
+      t.references :profile
+      t.string :role, :default => "comments"
       t.timestamps
     end
     
-    add_index :comments, :commentable_id
     add_index :comments, :commentable_type
+    add_index :comments, :commentable_id
+    add_index :comments, :profile_id
+    
+    create_table :accesses do |t|
+      t.integer :group_id
+      t.references :accessible, :polymorphic => true
+      t.timestamps
+    end
+    
+    add_index :accesses, :group_id
+    add_index :accesses, :accessible_id
+    add_index :accesses, :accessible_type
+    
+    create_table :albums do |t|
+      t.string :name
+      t.string :description
+      t.references :profile
+      t.timestamps
+    end
+    
+    create_table :sessions do |t|
+      t.string :session_id, :null => false
+      t.text :data
+      t.timestamps
+    end
+
+    add_index :sessions, :session_id
+    add_index :sessions, :updated_at
     
     # Create Default User
     profile = Profile.new
@@ -104,6 +128,7 @@ class SetupEntropiSocial < ActiveRecord::Migration
     drop_table :comments
     drop_table :likes
     drop_table :photos
+    drop_table :accesses
     
   end
 end
