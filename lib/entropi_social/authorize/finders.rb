@@ -5,7 +5,7 @@ module EntropiSocial
         base.extend(ClassMethods)
         base.scope :by_profile_id, lambda { |profile_id| base.where(:profile_id => profile_id) }
         base.scope :by_membership_id, lambda { 
-          |id| base.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.user_id.eq id)}
+          |id| base.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.profile_id.eq id)}
         }
         base.scope :by_id, lambda { |base_id| base.where(:id => base_id).limit(1) }
       end
