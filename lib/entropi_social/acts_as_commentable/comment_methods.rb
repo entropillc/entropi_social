@@ -1,3 +1,4 @@
+
 module EntropiSocial
   module ActsAsCommentable
     # including this module into your Comment model will give you finders and named scopes
@@ -10,29 +11,29 @@ module EntropiSocial
 
       def self.included(comment_model)
         comment_model.extend Finders
+        
         comment_model.scope :in_order, comment_model.order('created_at ASC')
         comment_model.scope :recent,   comment_model.order('created_at DESC')
+        comment_model.scope :by_commentable, lambda { |commentable_id| comment_model.where(:commentable_id => commentable_id) }
+        comment_model.scope :for_profile, lambda { |profile| comment_model.where(:profile_id => profile.id) }
+        comment_model.scope :for_model, lambda { |m| comment_model.where(:commentable_type => m) }
       end
     
       def all
         find(:all).in_order
       end
 
-      def is_comment_type?(type)
-        type.to_s == role.singularize.to_s
-      end
-
       module Finders
         # Helper class method to lookup all comments assigned
         # to all commentable types for a given user.
-        def find_comments_by_user(profile, role = "comments")
-          where(:profile_id => profile.id, :role => role).order("created_at DESC")
+        def find_comments_for_profile(profile)
+          self.for_profile(profile).recent
         end
 
         # Helper class method to look up all comments for 
         # commentable class name and commentable id.
-        def find_comments_for_commentable(commentable_str, commentable_id, role = "comments")
-          where(:commentable_type => commentable_str, :commentable_id => commentable_id, :role => role).order("created_at DESC")
+        def find_comments_for_commentable(commentable_str, commentable_id)
+          self.for_model(commentable_str).by_commentable(commentable_id).recent
         end
 
         # Helper class method to look up a commentable object

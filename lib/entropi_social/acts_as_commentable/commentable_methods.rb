@@ -8,53 +8,48 @@ module EntropiSocial
       def self.included(base)
         base.extend ClassMethods  
       end
-
+      
       module ClassMethods
-        def acts_as_commentable(*args)
-          comment_roles = args.to_a.flatten.compact.map(&:to_sym)
-          write_inheritable_attribute(:comment_types, (comment_roles.blank? ? [:comments] : comment_roles))
-          class_inheritable_reader(:comment_types)
-
-          options = ((args.blank? or args[0].blank?) ? {} : args[0])
-
-          if !comment_roles.blank?
-            comment_roles.each do |role|
-              has_many "#{role.to_s}_comments".to_sym,
-                {:class_name => "Comment",
-                  :as => :commentable,
-                  :dependent => :destroy,
-                  :conditions => ["role = ?", role.to_s],
-                  :before_add => Proc.new { |x, c| c.role = role.to_s }}
-            end
-          else
-            has_many :comments, {:as => :commentable, :dependent => :destroy}
-          end
-
-          comment_types.each do |role|
-            method_name = (role == :comments ? "comments" : "#{role.to_s}_comments").to_s
-            class_eval %{
-              def self.find_#{method_name}_for(obj)
-                commentable = self.base_class.name
-                Comment.find_comments_for_commentable(commentable, obj.id, "#{role.to_s}")
-              end
-
-              def self.find_#{method_name}_by_user(profile) 
-                commentable = self.base_class.name
-                Comment.where(:profile_id => profile.id, :commentable_type => commentable, :role => "#{role.to_s}").order("created_at DESC")
-              end
-
-              def #{method_name}_ordered_by_submitted
-                Comment.find_comments_for_commentable(self.class.name, id, "#{role.to_s}")
-              end
-
-              def add_#{method_name.singularize}(comment)
-                comment.role = "#{role.to_s}"
-                #{method_name} << comment
-              end
-            }
-          end
+        def acts_as_commentable
+          has_many :comments, :as => :commentable, :dependent => :destroy
+          include EntropiSocial::Acts::Commentable::InstanceMethods
+          extend EntropiSocial::Acts::Commentable::SingletonMethods
+          
         end
       end
+      
+      module InstanceMethods
+        # Helper method to get the latest comments for a model
+        def latest_comments
+          self.comments.latest
+        end
+        
+        # Helper that allows you to add a new comment to the model
+        def add_comment(comment)
+          comments << comment
+        end
+      end
+      
+      module SingletonMethods
+        # Helper method to look up comments for a specific object
+        # Equivalent to obj.comments
+        def find_comments_for(obj)
+          Comment.find_comments_for_commentable(model_commentable, obj.id)
+        end
+        
+        # Helper method to look up comments made by a particular profile for this model
+        def find_comments_for_commentable(profile)
+          Comment.find_comments_for_profile(profile).for_model(model_commentable)
+        end
+        
+        #private
+          
+          def model_commentable
+            self.base_class.name
+          end
+          
+      end
+      
     end
   end
 end
