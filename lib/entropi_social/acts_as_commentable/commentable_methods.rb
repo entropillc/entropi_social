@@ -42,7 +42,7 @@ module EntropiSocial
           Comment.find_comments_for_profile(profile).for_model(model_commentable)
         end
         
-        #private
+        protected
           
           def model_commentable
             self.base_class.name
