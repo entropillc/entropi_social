@@ -3,7 +3,7 @@ require 'devise'
 require 'devise_invitable'
 
 require 'entropi_social/authorize'
-require 'entropi_social/acts_as_commentable'
+require 'entropi_social/commentable'
 
 
 module EntropiSocial

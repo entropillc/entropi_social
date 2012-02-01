@@ -1,6 +1,6 @@
 
 module EntropiSocial
-  module ActsAsCommentable
+  module Commentable
     # This is included in the comment model and provides usefile methods for finding information
     # The named scopes are:
     #   in_order: Returns comments in the order they were created (created_at ASC).
@@ -8,7 +8,7 @@ module EntropiSocial
     #   by_commentable: Returns all the records with a certain commentable_id
     #   for_profile: Returns all the records for a given profile
     #   for_model: Return all the records for a given model
-    module Comment
+    module Finders
 
       def self.included(comment_model)
         comment_model.extend Finders
