@@ -12,12 +12,6 @@ module EntropiSocial
 
       def self.included(comment_model)
         comment_model.extend Finders
-        
-        comment_model.scope :in_order, comment_model.order('created_at ASC')
-        comment_model.scope :recent,   comment_model.order('created_at DESC')
-        comment_model.scope :by_commentable, lambda { |commentable_id| comment_model.where(:commentable_id => commentable_id) }
-        comment_model.scope :for_profile, lambda { |profile| comment_model.where(:profile_id => profile.id) }
-        comment_model.scope :for_model, lambda { |m| comment_model.where(:commentable_type => m) }
       end
     
       def all
@@ -25,6 +19,36 @@ module EntropiSocial
       end
 
       module Finders
+        
+        # Orders comments ascending by by the date created
+        def in_order
+          self.order('created_at ASC')
+        end
+        
+        # Orders comments descending by the date created
+        def recent
+          self.order('created_at DESC')
+        end
+        
+        # Finds comments that belong to a specifics model id (commentable_id)
+        # This is usually used in conjunction with for_model. For example you wold
+        # Find all comments for Entry for_model('Entry') where the entry id is 1
+        #   Comment.for_model('Entry').by_commentable(1)
+        # This finds all comments for the Entry with an id of 1.
+        def by_commentable(commentable_id)
+          self.where(:commentable_id => commentable_id)
+        end
+        
+        # Finds all comments for a profile
+        def for_profile(profile)
+          self.where(:profile_id => profile.id)
+        end
+        
+        # Finds all comments for a particular model
+        def for_model(m)
+          self.where(:commentable_type => m)
+        end
+        
         # Helper class method to lookup all comments assigned
         # to all commentable types for a given user.
         def find_comments_for_profile(profile)
