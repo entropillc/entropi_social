@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  include EntropiSocial::ActsAsCommentable::Comment
+  include EntropiSocial::Commentable::Finders
 
   belongs_to :commentable, :polymorphic => true
   

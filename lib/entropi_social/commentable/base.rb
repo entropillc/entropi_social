@@ -2,18 +2,18 @@ require 'active_record'
 
 # ActsAsCommentable
 module EntropiSocial
-  module Acts #:nodoc:
-    module Commentable #:nodoc:
+  module Commentable #:nodoc:
+    module Base #:nodoc:
 
       def self.included(base)
-        base.extend ClassMethods  
+        base.extend ClassMethods 
       end
       
       module ClassMethods
         def acts_as_commentable
           has_many :comments, :as => :commentable, :dependent => :destroy
-          include EntropiSocial::Acts::Commentable::InstanceMethods
-          extend EntropiSocial::Acts::Commentable::SingletonMethods
+          include EntropiSocial::Commentable::Base::InstanceMethods
+          extend EntropiSocial::Commentable::Base::SingletonMethods
           
         end
       end
@@ -54,4 +54,4 @@ module EntropiSocial
   end
 end
 
-ActiveRecord::Base.send(:include, EntropiSocial::Acts::Commentable)
+ActiveRecord::Base.send(:include, EntropiSocial::Commentable::Base)
