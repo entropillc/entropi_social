@@ -14,7 +14,7 @@ module EntropiSocial
         
         # Finds reocrds that are vieable by a particular profile id
         def by_membership_id(id)
-          self.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.profile_id.eq id)
+          self.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.profile_id.eq id)}
         end
         
         # Finds a model with a particular id
