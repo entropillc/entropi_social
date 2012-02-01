@@ -3,14 +3,25 @@ module EntropiSocial
     module Finders
       def self.included(base)
         base.extend(ClassMethods)
-        base.scope :by_profile_id, lambda { |profile_id| base.where(:profile_id => profile_id) }
-        base.scope :by_membership_id, lambda { 
-          |id| base.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.profile_id.eq id)}
-        }
-        base.scope :by_id, lambda { |base_id| base.where(:id => base_id).limit(1) }
       end
         
       module ClassMethods
+        
+        # Finds all models owned by profile_id
+        def by_profile_id(profile_id)
+          self.where(:profile_id => profile_id)
+        end
+        
+        # Finds reocrds that are vieable by a particular profile id
+        def by_membership_id(id)
+          self.includes(:accesses => [:group => :memberships]).where{(profile_id.eq id) | (memberships.profile_id.eq id)
+        end
+        
+        # Finds a model with a particular id
+        def by_id(base_id)
+          self.where(:id => base_id).limit(1)
+        end
+        
         # This model determins if it will send back entities owned by a user, or viewable by a user
         def for(requesting_user, for_profile)
           requesting_user.id.eql?(for_profile.user_id) ? self.owned_by(for_profile) : self.viewable_for(for_profile)
