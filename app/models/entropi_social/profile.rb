@@ -1,4 +1,4 @@
-class Profile < ActiveRecord::Base
+class EntropiSocial::Profile < ActiveRecord::Base
   belongs_to :user
   
   has_many :friendships_by_others, :class_name => "Friendship", :foreign_key => 'invited_id', :conditions => "status = '#{Friendship::ACCEPTED}'"
