@@ -40,8 +40,6 @@ module EntropiSocial
           has_many :accesses, :as => :accessible
           belongs_to :profile
           
-          #before_save :set_access_permissions
-          
         end
       end
     end
