@@ -1,8 +1,8 @@
 class Photo < ActiveRecord::Base
   acts_as_commentable
+  acts_as_authorizable
   
   belongs_to :photoable, :polymorphic => true
-  belongs_to :profile
   
   mount_uploader :asset, AssetUploader
   
