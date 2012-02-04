@@ -11,7 +11,8 @@ class Photo < ActiveRecord::Base
       :thumb => asset.thumb.url,
       :small => asset.small.url,
       :medium => asset.medium.url, 
-      :large => asset.large.url
+      :large => asset.large.url,
+      :created_at => self.created_at
     }
   end
 end
