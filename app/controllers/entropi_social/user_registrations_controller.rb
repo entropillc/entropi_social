@@ -4,7 +4,7 @@ module EntropiSocial
     # GET /resource/sign_up
       def new
         @user = User.new
-        @user.profile = Profile.new
+        @user.build_profile  
       end
 
       # POST /resource/sign_up
