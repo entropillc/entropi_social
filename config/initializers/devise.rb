@@ -70,22 +70,6 @@ Devise.setup do |config|
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "1b7f9bac66e61d8d7fa8fe02c5ca25fc7c774ec4b1e1a56117e8eec0f53fb6f66f6d03b85ab727dd7cc314516ead92e8792a995fc9120a273790b0f8382067b8"
-
-  # ==> Configuration for :invitable
-  # The period the generated invitation token is valid, after
-  # this period, the invited resource won't be able to accept the invitation.
-  # When invite_for is 0 (the default), the invitation won't expire.
-  config.invite_for = 3.weeks
-  
-  # Number of invitations users can send.
-  # If invitation_limit is nil, users can send unlimited invitations.
-  # If invitation_limit is 0, users can't send invitations.
-  # If invitation_limit n > 0, users can send n invitations.
-  # Default: nil
-  config.invitation_limit = 15
-  
-  # The key to be used to check existing users when sending an invitation
-  config.invite_key = :email
   
   # Flag that force a record to be valid before being actually invited 
   # Default: false
