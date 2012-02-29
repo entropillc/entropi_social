@@ -12,6 +12,9 @@ module EntropiSocial
         @user = User.new(params[:user])
       
         if @user.save
+          
+          flash[:notice] = I18n.t("devise.registrations.signed_up")
+          
           sign_in_and_redirect(:user, @user)
         else
           clean_up_passwords(@user)
