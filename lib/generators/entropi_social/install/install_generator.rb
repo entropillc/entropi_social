@@ -11,7 +11,7 @@ module EntropiSocial
       end
       
       def copy_configuration
-        copy_file 'devise_invitable.en.yml', 'config/devise_invitable.en.yml'
+        copy_file 'devise.rb', 'config/devise.rb'
         copy_file 'devise.en.yml', 'config/devise.en.yml'
       end
       
@@ -21,7 +21,7 @@ module EntropiSocial
       end
       
       def copy_migrations
-        migration_template '20111118193950_setup_entropi_social.rb', 'db/migrate/20111118193950_setup_entropi_social.rb'
+        migration_template 'setup_entropi_social.rb', 'db/migrate/setup_entropi_social.rb'
       end
       
       def add_gems
