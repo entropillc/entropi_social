@@ -2,14 +2,20 @@ module EntropiSocial
   module Models
     module User
       
-      def self.included(user_model)
-        user_model.extend ClassMethods
+      def self.included(base)
+        base.extend ClassMethods
+      end
+      
+      module InstanceMethods
+
       end
       
       module ClassMethods
-        
-        
+        #include EntropiSocial::Models::User::InstanceMethods
       end
+      
+
+      
     end
   end
 end

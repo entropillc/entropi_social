@@ -1,7 +1,6 @@
 class SetupEntropiSocial < ActiveRecord::Migration
   def up
     create_table :users do |t|
-      t.string    :username
       t.integer   :invitation_limit,  :default => 0
       t.database_authenticatable :null => false
       t.invitable
