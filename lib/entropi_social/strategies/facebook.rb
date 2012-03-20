@@ -13,7 +13,7 @@ module EntropiSocial
           if user = User.where(:email => data.email).first
             user
           else # Create a user with a stub password.
-            User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :profile => profile) 
+            user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20]) 
             profile = user.build_profile(:first_name => access_token.info.first_name, :last_name => access_token.info.first_name)
             profile.save!
             return user

@@ -18,7 +18,7 @@ class EntropiSocial::Profile < ActiveRecord::Base
   has_one :photo, :as => :photoable
   has_many :groups, :as => :groupable
   
-  validates_presence_of :first_name, :last_name, :birth_date
+  validates_presence_of :first_name, :last_name
   accepts_nested_attributes_for :photo
   
   def full_name
