@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
-
-  devise :database_authenticatable, :registerable, :invitable,
+  
+=begin
+  devise :database_authenticatable, :registerable, #:omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
+=end
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me, :profile_attributes, :profile
@@ -14,8 +16,6 @@ class User < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :groups, :as => :groupable
 
-  
   accepts_nested_attributes_for :profile
-
-
+  
 end

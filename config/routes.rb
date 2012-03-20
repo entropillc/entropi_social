@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  devise_for  :user,
+  devise_for  :users,
               :controllers => { :sessions => 'entropi_social/user_sessions',
-                                :registrations => 'entropi_social/user_registrations'},
+                                :registrations => 'entropi_social/user_registrations',
+                                :omniauth_callbacks => "entropi_social/omniauth_callbacks" },
               :skip => [:unlocks],
               :path_names => { :sign_out => 'logout'}
   
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
     get "/signout" => "entropi_social/user_sessions#destroy", :as => :logout
     get "/signup" => "entropi_social/user_registrations#new", :as => :signup
     get "/profile" => "devise/registrations#edit"
+    #get '/users/auth/:provider' => 'omniauth_callbacks#passthru', :as => :passthru
   end
-  
   
 end
