@@ -7,12 +7,9 @@ module EntropiSocial
     end
 
     def create
-      logger.info "*************************** WTF AM I DOING HERE ********************"
       
       authenticate_user!
       
-      
-      logger.info "*************************** Still HERE ********************"
       if user_signed_in?
         flash[:notice] = I18n.t("devise.sessions.signed_in")
         redirect_to(root_path)
