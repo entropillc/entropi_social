@@ -2,7 +2,9 @@ class SetupEntropiSocial < ActiveRecord::Migration
   def up
     create_table :users do |t|
       t.integer   :invitation_limit,  :default => 0
-      t.database_authenticatable :null => false
+      t.boolean   :admin,             :default => false, :null => false
+      t.boolean   :banned,            :default => false, :null => false
+      t.database_authenticatable      :null => false
       t.invitable
       t.recoverable
       t.rememberable
