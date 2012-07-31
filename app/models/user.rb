@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   
   has_one :avatar, :class_name => "Photo", :as => :photoable
   
-  has_one :profile, :dependent => :destroy
+  has_one :profile, :dependent => :destroy, :class_name => "EntropiSocial::Profile"
   has_many :memberships, :dependent => :destroy
   has_many :groups, :as => :groupable
 
