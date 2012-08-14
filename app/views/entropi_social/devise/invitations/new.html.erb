@@ -1,18 +1,17 @@
-<h2>Send invitation</h2>
-
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
-  <fieldset>
-  <div class="clearfix">
-    <%= f.label :email %>
-    <div class="input">
-      <%= f.text_field :email %>
-    </div>
-  </div>
-  <div class="clearfix">
-    <div class="input"><%= f.submit "Send an invitation", :class => 'btn primary' %></div>
-  </div>
-  </fieldset>
-<% end %>
-
-<%= link_to "Home", after_sign_in_path_for(resource_name) %><br />
+<div>
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+    <fieldset>
+      <legend>Send invitation</legend>
+      <%= devise_error_messages! %>
+      <div class="control-group">
+        <%= f.label :email, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :email %>
+        </div>
+      </div>
+      <div class="form-actions">
+        <%= f.submit "Send an invitation", :class => 'btn btn-primary' %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
