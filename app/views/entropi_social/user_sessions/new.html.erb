@@ -1,24 +1,30 @@
-<div class="modal active well">
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-    <div class="modal-header">
-      <h3>Log In</h3>
-    </div>
-    <div class="modal-body">
-      <div class="clearfix">
-        <%= f.label :username %>
-        <div class="input">
-          <%= f.text_field :username, :class => "xlarge", :autofocus => true %>
-        </div>
-      </div>
-      <div class="clearfix">
-        <%= f.label :password %>
-        <div class="input">
-          <%= f.password_field :password, :class => "xlarge" %>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <%= f.submit "Sign In", :class => "btn primary" %>
-    </div>
-  <% end %>
+<div class="row-fluid">
+  <div class="span5 well">
+    <%= flash[:error] %>
+    <%= form_for(resource, :as => resource_name, :url => user_session_path(resource_name)) do |f| %>
+      <fieldset>
+          <div class="control-group">
+            <%= f.label :username, class: "control-label" %>
+            <div>
+              <%= f.text_field :username, class: "span7", autofocus: true %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :password, class: "control-label" %>
+            <div>
+              <%= f.password_field :password, class: "span7" %>
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= f.submit "Sign In", :class => "btn btn-primary" %>
+            <p>
+              <%= render :partial => "devise/shared/links" %>
+            </p>
+          </div>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="span6">
+    <%= render 'entropi_social/shares/login_with_facebook' %>
+  </div>
 </div>
