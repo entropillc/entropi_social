@@ -7,6 +7,8 @@ Rails.application.routes.draw do
               :path_names => { :sign_out => 'logout'}
 
   devise_scope :user do
+    get "/choose_username" => "entropi_social/omniauth_callbacks#choose_username", :as => :choose_username
+    post "/create_account" => "entropi_social/omniauth_callbacks#create", :as => :create_account
     get "/signin" => "entropi_social/user_sessions#new", :as => :login
     get "/signout" => "entropi_social/user_sessions#destroy", :as => :logout
     get "/signup" => "entropi_social/user_registrations#new", :as => :signup
