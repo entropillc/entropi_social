@@ -7,17 +7,19 @@ module EntropiSocial
     end
 
     def create
-      
       authenticate_user!
-      
+
       if user_signed_in?
-        flash[:notice] = I18n.t("devise.sessions.signed_in")
-        redirect_to(root_path)
+        respond_to do |format|
+          format.html {
+            flash[:notice] = I18n.t("devise.sessions.signed_in")
+            redirect_to(root_path)
+          }
+        end
       else
         flash[:error] = I18n.t("devise.failure.invalid")
         render :new
       end
-
     end
 
     def destroy

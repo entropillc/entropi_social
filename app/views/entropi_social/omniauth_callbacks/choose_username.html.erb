@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="span6 well">
+    <%= form_for(@user, :url => create_account_path) do |f| %>
+      <h3>Registration</h3>
+      <p>
+        Please fill out the form below to complete the registration for this site.
+      </p>
+      <%= error_messages_for(@user) %>
+      <div class="control-group">
+        <%= f.label :username %>
+        <div class="controls">
+          <%= f.text_field :username, :class => "span5", :autofocus => true %>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <%= f.submit @user.new_record? ? "Sign Up" : "Update Account", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="span5">
+  </div>
+</div>
+
