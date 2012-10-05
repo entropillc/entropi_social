@@ -10,12 +10,8 @@ module EntropiSocial
       authenticate_user!
 
       if user_signed_in?
-        respond_to do |format|
-          format.html {
-            flash[:notice] = I18n.t("devise.sessions.signed_in")
-            redirect_to(root_path)
-          }
-        end
+        flash[:notice] = I18n.t("devise.sessions.signed_in")
+        redirect_to(root_path)
       else
         flash[:error] = I18n.t("devise.failure.invalid")
         render :new
